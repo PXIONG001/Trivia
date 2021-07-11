@@ -16,11 +16,16 @@ total_music_score = 0
 
 score = []
 
+'''
+    There will be at least 1 to 3 other functions. 
+    Be advised, there will be more to come with other 
+    features to come such as adding an account by adding
+    a login feature.
+'''
+
+# A prototype function in progress
 def play_the_game():
     return
-
-
-
 
 #Line 20-22 and line 24-26 opens the csv file and creates it as a list
 infile = open('Exfiles.csv','r')
@@ -30,6 +35,11 @@ infile.close()
 infile = open('Exfiles.csv','r')
 entry_file = infile.read().lower().strip().split('\n')
 infile.close()
+
+''' 
+    Within line 37 to line 147, we can add a function that will make
+    the code look less intimidating and less confusing for people to see. 
+'''
 
 #The Trivia Begins with a for loop
 for num in range(len(exfile)):
@@ -76,6 +86,8 @@ for num in range(len(exfile)):
                 questions.append(Q5)
                 secret_file.append(line[7])
         
+        ''' Let's remodify this for loop with the if statements. We can try to make it much more shorter. '''
+
         #In this loop, the file input is now sent to this loop where it analyzes the input and chooses the correct if statement to play
         for index in range(len(mQuestion)):
             num_question += 1
