@@ -25,7 +25,7 @@ score = []
 
 # A prototype function in progress
 def play_the_game():
-    return
+    return 0
 
 #Line 20-22 and line 24-26 opens the csv file and creates it as a list
 infile = open('Exfiles.csv','r')
@@ -44,6 +44,12 @@ infile.close()
 #The Trivia Begins with a for loop
 for num in range(len(exfile)):
     
+    do_you_want_to_play = input('Enter y or n to play the game ')
+
+    if do_you_want_to_play == 'n':
+        found = False
+        break
+
     #Asks the user to enter a trivia file to play
     file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
     found = False
