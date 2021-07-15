@@ -11,7 +11,11 @@ from PIL import Image
     a login feature.
 '''
 
-# A prototype function in progress
+# prototype function to play which trivia topic (music, history, sports, and movies)
+def trivia():
+    return 0
+
+# play_the_game function plays the game
 def play_the_game(entry_file, count, exfile, sum_correct, correct_history_score, correct_movies_score, correct_music_score, correct_sports_score, total_history_score, total_movies_score, total_sports_score, total_music_score, score):
     #The Trivia Begins with a for loop
     for num in range(len(exfile)):
@@ -65,7 +69,7 @@ def play_the_game(entry_file, count, exfile, sum_correct, correct_history_score,
                     secret_file.append(line[7])
             
             ''' Let's remodify this for loop with the if statements. We can try to make it much more shorter. '''
-
+            
             #In this loop, the file input is now sent to this loop where it analyzes the input and chooses the correct if statement to play
             for index in range(len(mQuestion)):
                 num_question += 1
