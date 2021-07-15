@@ -3,6 +3,164 @@ import matplotlib.pyplot as plt
 import pygame
 from PIL import Image
 
+
+'''
+    There will be at least 1 to 3 other functions. 
+    Be advised, there will be more to come with other 
+    features to come such as adding an account by adding
+    a login feature.
+'''
+
+# A prototype function in progress
+def play_the_game(entry_file, count, exfile, sum_correct, correct_history_score, correct_movies_score, correct_music_score, correct_sports_score, total_history_score, total_movies_score, total_sports_score, total_music_score, score):
+    #The Trivia Begins with a for loop
+    for num in range(len(exfile)):
+        
+        do_you_want_to_play = input('Enter y or n to play the game ')
+
+        if do_you_want_to_play == 'n':
+            found = False
+            break
+
+        #Asks the user to enter a trivia file to play
+        file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
+        found = False
+        
+        #When entering a trivia file, the if statement, if true, removes the file in entry_file
+        entry_file.remove(file)
+        num_question = 0
+        mQuestion = []
+        mAnswer = []
+        Q1 = []
+        Q2 = []
+        Q3 = []
+        Q4 = []
+        Q5 = []
+        questions = []
+        secret_file = []
+
+        #When while loop is true, the loop is activated to play the trivia file that you request
+        while not found:
+            infile = open('%s.csv' % (file),'r')
+            allRows = infile.read().strip().split('\n') 
+            infile.close() 
+            found = True
+                
+            #This causes the file to get created into a list which also creates a nested list as well.        
+            for row in allRows:
+                if len(row.strip(' ,')) > 0:
+                    line = row.split(',')
+                    mQuestion.append(line[0])
+                    mAnswer.append(line[1])
+                    Q1.append(line[2])
+                    questions.append(Q1)
+                    Q2.append(line[3])
+                    questions.append(Q2)
+                    Q3.append(line[4])
+                    questions.append(Q3)
+                    Q4.append(line[5])
+                    questions.append(Q4)
+                    Q5.append(line[6])
+                    questions.append(Q5)
+                    secret_file.append(line[7])
+            
+            ''' Let's remodify this for loop with the if statements. We can try to make it much more shorter. '''
+
+            #In this loop, the file input is now sent to this loop where it analyzes the input and chooses the correct if statement to play
+            for index in range(len(mQuestion)):
+                num_question += 1
+                #This prints out the multpile choice answers
+                print('%d. %s' % (num_question, questions[index]))
+                
+                #This plays the history trivia
+                if file.lower().strip() == exfile[0].lower().strip():
+                    #This opens the image which movies, sports, and historys all have. 
+                    img = Image.open('%s' % (secret_file[index]))
+                    img.show()
+                    aQuestion = input('%s: ' % (mQuestion[index]))
+                    if aQuestion.lower().strip() == mAnswer[index].lower().strip():
+                        print('correct \n')
+                        correct_history_score += 1
+                        sum_correct += 1
+                    else:
+                        print('Incorrect \n')
+                    total_history_score += 1
+                
+                #This plays the movie trivia
+                if file.lower().strip() == exfile[1].lower().strip():
+                    img = Image.open('%s' % (secret_file[index]))
+                    img.show()
+                    aQuestion = input('%s: ' % (mQuestion[index]))
+                    if aQuestion.lower().strip() == mAnswer[index].lower().strip():
+                        print('correct \n')
+                        correct_movies_score += 1
+                        sum_correct += 1
+                    else:
+                        print('Incorrect \n')
+                    total_movies_score += 1
+                
+                #This plays the music trivia 
+                if file.lower().strip() == exfile[2].lower().strip():
+                    #This set of code plays the music and stops the music when the player enters a trivia.
+                    pygame.init()
+                    pygame.mixer.init()
+                    pygame.mixer.music.load('%s' % (secret_file[index]))
+                    pygame.mixer.music.play()
+                    aQuestion = input('%s: ' % (mQuestion[index]))
+                    pygame.mixer.music.stop()
+                    if aQuestion.lower().strip() == mAnswer[index].lower().strip():
+                        print('correct \n')
+                        correct_music_score += 1
+                        sum_correct += 1
+                    else:
+                        print('Incorrect \n')
+                    total_music_score += 1
+                
+                #This plays the sports Trivia        
+                if file.lower().strip() == exfile[3].lower().strip():
+                    img = Image.open('%s' % (secret_file[index]))
+                    img.show()
+                    aQuestion = input('%s: ' % (mQuestion[index]))
+                    if aQuestion.lower().strip() == mAnswer[index].lower().strip():
+                        print('correct \n')
+                        correct_sports_score += 1
+                        sum_correct += 1
+                    else:
+                        print('Incorrect \n')
+                    total_sports_score += 1
+                
+                count += 1
+        
+        #This will activate if the file is not found. 
+        if not found:
+            print('No file called %s was found' % (file))
+
+    #Once you finished playing the game, the next part will be getting a feedback on whether their should be some improvements on the game.
+    #Plus, the next part will give you a result for each categories and the total for all of the categories which will display a chart with your results.
+    if found:
+        review = input('Give us a review on what we can improve on this game, or if you want us to add some stuff into this trivia?')
+        outfile = open('Reviews.csv','a') 
+        outfile.write('%s' % (review) + ('\n'))
+        outfile.close()
+        
+        historyAxis = float(int(correct_history_score/total_history_score))*100
+        score.append(historyAxis)
+        moviesAxis = float(int(correct_movies_score/total_movies_score))*100
+        score.append(moviesAxis)
+        musicAxis = float(int(correct_music_score/total_music_score))*100
+        score.append(musicAxis)
+        sportsAxis = float(int(correct_sports_score/total_sports_score))*100
+        score.append(sportsAxis)
+        total_score_Axis = float(int(sum_correct/count))*100
+        score.append(total_score_Axis)
+        app = 'total'
+        exfile.append(app)
+        plt.bar(exfile,score, color=['blue', 'red'])
+        plt.xlabel('Trivia Categories')
+        plt.ylabel('Correct Percentage')
+        plt.title('Trivia Results')
+        plt.show()
+
 count = 0
 sum_correct = 0
 correct_sports_score = 0
@@ -15,17 +173,6 @@ total_history_score = 0
 total_music_score = 0
 
 score = []
-
-'''
-    There will be at least 1 to 3 other functions. 
-    Be advised, there will be more to come with other 
-    features to come such as adding an account by adding
-    a login feature.
-'''
-
-# A prototype function in progress
-def play_the_game():
-    return 0
 
 #Line 20-22 and line 24-26 opens the csv file and creates it as a list
 infile = open('Exfiles.csv','r')
@@ -40,151 +187,6 @@ infile.close()
     Within line 37 to line 147, we can add a function that will make
     the code look less intimidating and less confusing for people to see. 
 '''
+play_the_game(entry_file, count, exfile, sum_correct, correct_history_score, correct_movies_score, correct_music_score, correct_sports_score, total_history_score, total_movies_score, total_sports_score, total_music_score, score)
 
-#The Trivia Begins with a for loop
-for num in range(len(exfile)):
-    
-    do_you_want_to_play = input('Enter y or n to play the game ')
 
-    if do_you_want_to_play == 'n':
-        found = False
-        break
-
-    #Asks the user to enter a trivia file to play
-    file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
-    found = False
-    
-    #When entering a trivia file, the if statement, if true, removes the file in entry_file
-    entry_file.remove(file)
-    num_question = 0
-    mQuestion = []
-    mAnswer = []
-    Q1 = []
-    Q2 = []
-    Q3 = []
-    Q4 = []
-    Q5 = []
-    questions = []
-    secret_file = []
-
-    #When while loop is true, the loop is activated to play the trivia file that you request
-    while not found:
-        infile = open('%s.csv' % (file),'r')
-        allRows = infile.read().strip().split('\n') 
-        infile.close() 
-        found = True
-            
-        #This causes the file to get created into a list which also creates a nested list as well.        
-        for row in allRows:
-            if len(row.strip(' ,')) > 0:
-                line = row.split(',')
-                mQuestion.append(line[0])
-                mAnswer.append(line[1])
-                Q1.append(line[2])
-                questions.append(Q1)
-                Q2.append(line[3])
-                questions.append(Q2)
-                Q3.append(line[4])
-                questions.append(Q3)
-                Q4.append(line[5])
-                questions.append(Q4)
-                Q5.append(line[6])
-                questions.append(Q5)
-                secret_file.append(line[7])
-        
-        ''' Let's remodify this for loop with the if statements. We can try to make it much more shorter. '''
-
-        #In this loop, the file input is now sent to this loop where it analyzes the input and chooses the correct if statement to play
-        for index in range(len(mQuestion)):
-            num_question += 1
-            #This prints out the multpile choice answers
-            print('%d. %s' % (num_question, questions[index]))
-            
-            #This plays the history trivia
-            if file.lower().strip() == exfile[0].lower().strip():
-                #This opens the image which movies, sports, and historys all have. 
-                img = Image.open('%s' % (secret_file[index]))
-                img.show()
-                aQuestion = input('%s: ' % (mQuestion[index]))
-                if aQuestion.lower().strip() == mAnswer[index].lower().strip():
-                    print('correct \n')
-                    correct_history_score += 1
-                    sum_correct += 1
-                else:
-                    print('Incorrect \n')
-                total_history_score += 1
-            
-            #This plays the movie trivia
-            if file.lower().strip() == exfile[1].lower().strip():
-                img = Image.open('%s' % (secret_file[index]))
-                img.show()
-                aQuestion = input('%s: ' % (mQuestion[index]))
-                if aQuestion.lower().strip() == mAnswer[index].lower().strip():
-                    print('correct \n')
-                    correct_movies_score += 1
-                    sum_correct += 1
-                else:
-                    print('Incorrect \n')
-                total_movies_score += 1
-            
-            #This plays the music trivia 
-            if file.lower().strip() == exfile[2].lower().strip():
-                #This set of code plays the music and stops the music when the player enters a trivia.
-                pygame.init()
-                pygame.mixer.init()
-                pygame.mixer.music.load('%s' % (secret_file[index]))
-                pygame.mixer.music.play()
-                aQuestion = input('%s: ' % (mQuestion[index]))
-                pygame.mixer.music.stop()
-                if aQuestion.lower().strip() == mAnswer[index].lower().strip():
-                    print('correct \n')
-                    correct_music_score += 1
-                    sum_correct += 1
-                else:
-                    print('Incorrect \n')
-                total_music_score += 1
-            
-            #This plays the sports Trivia        
-            if file.lower().strip() == exfile[3].lower().strip():
-                img = Image.open('%s' % (secret_file[index]))
-                img.show()
-                aQuestion = input('%s: ' % (mQuestion[index]))
-                if aQuestion.lower().strip() == mAnswer[index].lower().strip():
-                    print('correct \n')
-                    correct_sports_score += 1
-                    sum_correct += 1
-                else:
-                    print('Incorrect \n')
-                total_sports_score += 1
-            
-            count += 1
-    
-    #This will activate if the file is not found. 
-    if not found:
-        print('No file called %s was found' % (file))
-
-#Once you finished playing the game, the next part will be getting a feedback on whether their should be some improvements on the game.
-#Plus, the next part will give you a result for each categories and the total for all of the categories which will display a chart with your results.
-if found:
-    review = input('Give us a review on what we can improve on this game, or if you want us to add some stuff into this trivia?')
-    outfile = open('Reviews.csv','a') 
-    outfile.write('%s' % (review) + ('\n'))
-    outfile.close()
-    
-    historyAxis = float(int(correct_history_score/total_history_score))*100
-    score.append(historyAxis)
-    moviesAxis = float(int(correct_movies_score/total_movies_score))*100
-    score.append(moviesAxis)
-    musicAxis = float(int(correct_music_score/total_music_score))*100
-    score.append(musicAxis)
-    sportsAxis = float(int(correct_sports_score/total_sports_score))*100
-    score.append(sportsAxis)
-    total_score_Axis = float(int(sum_correct/count))*100
-    score.append(total_score_Axis)
-    app = 'total'
-    exfile.append(app)
-    plt.bar(exfile,score, color=['blue', 'red'])
-    plt.xlabel('Trivia Categories')
-    plt.ylabel('Correct Percentage')
-    plt.title('Trivia Results')
-    plt.show()
