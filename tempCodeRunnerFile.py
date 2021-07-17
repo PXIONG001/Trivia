@@ -29,14 +29,23 @@ def play_the_game(entryfile, exfile):
     total_music_score = 0
 
     score = []
-    
-    #The Trivia Begins with a for loop
-    for num in range(len(exfile)):
 
-        #Asks the user to enter a trivia file to play
-        file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
-        found = False
+    found = False
+    
+    # The Trivia Begins with a for loop
+    for num in range(len(exfile)):
         
+        # Enter a file name that is within exfiles
+        while True:
+            #Asks the user to enter a trivia file to play
+            file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
+
+            if file not in exfile:
+                print('Invalid name. Please choose one of the files listed to you to play!')
+
+            else:
+                break  
+
         #When entering a trivia file, the if statement, if true, removes the file in entry_file
         entry_file.remove(file)
         num_question = 0
@@ -146,8 +155,9 @@ def play_the_game(entryfile, exfile):
         if not found:
             print('No file called %s was found' % (file))
 
-    #Once you finished playing the game, the next part will be getting a feedback on whether their should be some improvements on the game.
-    #Plus, the next part will give you a result for each categories and the total for all of the categories which will display a chart with your results.
+    # Once you finished playing the game, the next part will be getting a feedback on whether their should be some improvements on the game.
+    # Plus, the next part will give you a result for each categories and the total for all of the categories which will display a chart with 
+    # your results.
     if found:
         review = input('Give us a review on what we can improve on this game, or if you want us to add some stuff into this trivia?')
         outfile = open('Reviews.csv','a') 
