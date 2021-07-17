@@ -16,22 +16,38 @@ def trivia():
     return 0
 
 # play_the_game function plays the game
-def play_the_game(entry_file, count, exfile, sum_correct, correct_history_score, correct_movies_score, correct_music_score, correct_sports_score, total_history_score, total_movies_score, total_sports_score, total_music_score, score):
-    #The Trivia Begins with a for loop
+def play_the_game(entryfile, exfile):
+    count = 0
+    sum_correct = 0
+    correct_sports_score = 0
+    correct_movies_score = 0
+    correct_history_score = 0
+    correct_music_score = 0
+    total_sports_score = 0
+    total_movies_score = 0
+    total_history_score = 0
+    total_music_score = 0
+
+    score = []
+
+    found = False
+    
+    # The Trivia Begins with a for loop
     for num in range(len(exfile)):
         
-        do_you_want_to_play = input('Enter y or n to play the game ')
+        # Enter a file name that is within exfiles
+        while True:
+            #Asks the user to enter a trivia file to play
+            file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
 
-        if do_you_want_to_play == 'n':
-            found = False
-            break
+            if file not in exfile:
+                print('Invalid file name. Please choose one of the files listed to you to play!')
 
-        #Asks the user to enter a trivia file to play
-        file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
-        found = False
-        
+            else:
+                break  
+
         #When entering a trivia file, the if statement, if true, removes the file in entry_file
-        entry_file.remove(file)
+        entry_file.remove(file) 
         num_question = 0
         mQuestion = []
         mAnswer = []
@@ -139,8 +155,12 @@ def play_the_game(entry_file, count, exfile, sum_correct, correct_history_score,
         if not found:
             print('No file called %s was found' % (file))
 
-    #Once you finished playing the game, the next part will be getting a feedback on whether their should be some improvements on the game.
-    #Plus, the next part will give you a result for each categories and the total for all of the categories which will display a chart with your results.
+    # Once you finished playing the game, the next part 
+    # will be getting a feedback on whether their should 
+    # be some improvements on the game. Plus, the next part 
+    # will give you a result for each categories and the total 
+    # for all of the categories which will display a chart with 
+    # your results.
     if found:
         review = input('Give us a review on what we can improve on this game, or if you want us to add some stuff into this trivia?')
         outfile = open('Reviews.csv','a') 
@@ -165,20 +185,9 @@ def play_the_game(entry_file, count, exfile, sum_correct, correct_history_score,
         plt.title('Trivia Results')
         plt.show()
 
-count = 0
-sum_correct = 0
-correct_sports_score = 0
-correct_movies_score = 0
-correct_history_score = 0
-correct_music_score = 0
-total_sports_score = 0
-total_movies_score = 0
-total_history_score = 0
-total_music_score = 0
 
-score = []
 
-#Line 20-22 and line 24-26 opens the csv file and creates it as a list
+#Line 191-193 and line 195-197 opens the csv file and creates it as a list
 infile = open('Exfiles.csv','r')
 exfile = infile.read().lower().strip().split('\n')
 infile.close()
@@ -187,10 +196,18 @@ infile = open('Exfiles.csv','r')
 entry_file = infile.read().lower().strip().split('\n')
 infile.close()
 
-''' 
-    Within line 37 to line 147, we can add a function that will make
-    the code look less intimidating and less confusing for people to see. 
-'''
-play_the_game(entry_file, count, exfile, sum_correct, correct_history_score, correct_movies_score, correct_music_score, correct_sports_score, total_history_score, total_movies_score, total_sports_score, total_music_score, score)
+# A loop where the player can choose to play or not.
+while True:
 
+    do_you_want_to_play = input('Enter y or n to play the game: ')
 
+    if do_you_want_to_play == 'y':
+        play_the_game(entry_file, exfile)
+        statement = False
+
+    elif do_you_want_to_play == 'n':
+        print('Goodbye!')
+        break
+
+    else:
+        print('Invalid input! You must comply and enter either y or n!')
