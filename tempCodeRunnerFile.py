@@ -11,10 +11,6 @@ from PIL import Image
     a login feature.
 '''
 
-# prototype function to play which trivia topic (music, history, sports, and movies)
-def trivia():
-    return 0
-
 # play_the_game function plays the game
 def play_the_game(entryfile, exfile):
     count = 0
@@ -41,13 +37,13 @@ def play_the_game(entryfile, exfile):
             file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
 
             if file not in exfile:
-                print('Invalid name. Please choose one of the files listed to you to play!')
+                print('Invalid file name. Please choose one of the files listed to you to play!')
 
             else:
                 break  
 
         #When entering a trivia file, the if statement, if true, removes the file in entry_file
-        entry_file.remove(file)
+        entry_file.remove(file) 
         num_question = 0
         mQuestion = []
         mAnswer = []
@@ -155,8 +151,11 @@ def play_the_game(entryfile, exfile):
         if not found:
             print('No file called %s was found' % (file))
 
-    # Once you finished playing the game, the next part will be getting a feedback on whether their should be some improvements on the game.
-    # Plus, the next part will give you a result for each categories and the total for all of the categories which will display a chart with 
+    # Once you finished playing the game, the next part 
+    # will be getting a feedback on whether their should 
+    # be some improvements on the game. Plus, the next part 
+    # will give you a result for each categories and the total 
+    # for all of the categories which will display a chart with 
     # your results.
     if found:
         review = input('Give us a review on what we can improve on this game, or if you want us to add some stuff into this trivia?')
@@ -184,7 +183,7 @@ def play_the_game(entryfile, exfile):
 
 
 
-#Line 20-22 and line 24-26 opens the csv file and creates it as a list
+#Line 191-193 and line 195-197 opens the csv file and creates it as a list
 infile = open('Exfiles.csv','r')
 exfile = infile.read().lower().strip().split('\n')
 infile.close()
@@ -193,15 +192,8 @@ infile = open('Exfiles.csv','r')
 entry_file = infile.read().lower().strip().split('\n')
 infile.close()
 
-''' 
-    Within line 37 to line 147, we can add a function that will make
-    the code look less intimidating and less confusing for people to see. 
-'''
-# do_you_want_to_play = input('Enter y or n to play the game: ')
-
-statement = True
-
-while statement:
+# A loop where the player can choose to play or not.
+while True:
 
     do_you_want_to_play = input('Enter y or n to play the game: ')
 
@@ -215,11 +207,3 @@ while statement:
 
     else:
         print('Invalid input! You must comply and enter either y or n!')
-
-# if do_you_want_to_play == 'n':
-#     print('Goodbye!')
-
-# else:    
-#     play_the_game(entry_file, count, exfile, sum_correct, correct_history_score, correct_movies_score, correct_music_score, correct_sports_score, total_history_score, total_movies_score, total_sports_score, total_music_score, score)
-
-
