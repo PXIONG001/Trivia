@@ -146,10 +146,6 @@ def play_the_game(entryfile, exfile):
                     total_sports_score += 1
                 
                 count += 1
-        
-        #This will activate if the file is not found. 
-        if not found:
-            print('No file called %s was found' % (file))
 
     # Once you finished playing the game, the next part 
     # will be getting a feedback on whether their should 
