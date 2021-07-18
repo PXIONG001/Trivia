@@ -13,6 +13,7 @@ from PIL import Image
 
 # play_the_game function plays the game
 def play_the_game(entryfile, exfile):
+    
     count = 0
     sum_correct = 0
     correct_sports_score = 0
@@ -25,8 +26,6 @@ def play_the_game(entryfile, exfile):
     total_music_score = 0
 
     score = []
-
-    
     
     # The Trivia Begins with a for loop
     for num in range(len(exfile)):
