@@ -26,17 +26,19 @@ def play_the_game(entryfile, exfile):
 
     score = []
 
-    found = False
+    
     
     # The Trivia Begins with a for loop
     for num in range(len(exfile)):
+
+        found = False
         
         # Enter a file name that is within exfiles
         while True:
             #Asks the user to enter a trivia file to play
             file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
 
-            if file not in exfile:
+            if file not in entry_file:
                 print('Invalid file name. Please choose one of the files listed to you to play!')
 
             else:
@@ -88,35 +90,38 @@ def play_the_game(entryfile, exfile):
                 #This prints out the multpile choice answers
                 print('%d. %s' % (num_question, questions[index]))
                 
-                #This plays the history trivia
-                if file.lower().strip() == exfile[0].lower().strip():
-                    #This opens the image which movies, sports, and historys all have. 
+                # This is a more condense version of playing the sports, movies, and history trivia
+                if file.lower().strip() in exfile and file.lower().strip() != 'music':
                     img = Image.open('%s' % (secret_file[index]))
                     img.show()
                     aQuestion = input('%s: ' % (mQuestion[index]))
                     if aQuestion.lower().strip() == mAnswer[index].lower().strip():
                         print('correct \n')
-                        correct_history_score += 1
+
+                        if file.lower().strip() == 'movie':
+                            correct_movies_score += 1
+
+                        elif file.lower().strip() == 'history':
+                            correct_history_score += 1
+                        
+                        elif file.lower().strip() == 'sports':
+                            correct_sports_score += 1
+
                         sum_correct += 1
                     else:
                         print('Incorrect \n')
-                    total_history_score += 1
-                
-                #This plays the movie trivia
-                if file.lower().strip() == exfile[1].lower().strip():
-                    img = Image.open('%s' % (secret_file[index]))
-                    img.show()
-                    aQuestion = input('%s: ' % (mQuestion[index]))
-                    if aQuestion.lower().strip() == mAnswer[index].lower().strip():
-                        print('correct \n')
-                        correct_movies_score += 1
-                        sum_correct += 1
-                    else:
-                        print('Incorrect \n')
-                    total_movies_score += 1
+
+                        if file.lower().strip() == 'movie':
+                            total_movies_score += 1
+
+                        elif file.lower().strip() == 'history':
+                            total_history_score += 1
+                        
+                        elif file.lower().strip() == 'sports':
+                            total_sports_score += 1
                 
                 #This plays the music trivia 
-                if file.lower().strip() == exfile[2].lower().strip():
+                if file.lower().strip() in exfile and file.lower().strip() == 'music':
                     #This set of code plays the music and stops the music when the player enters a trivia.
                     pygame.init()
                     pygame.mixer.init()
@@ -131,19 +136,6 @@ def play_the_game(entryfile, exfile):
                     else:
                         print('Incorrect \n')
                     total_music_score += 1
-                
-                #This plays the sports Trivia        
-                if file.lower().strip() == exfile[3].lower().strip():
-                    img = Image.open('%s' % (secret_file[index]))
-                    img.show()
-                    aQuestion = input('%s: ' % (mQuestion[index]))
-                    if aQuestion.lower().strip() == mAnswer[index].lower().strip():
-                        print('correct \n')
-                        correct_sports_score += 1
-                        sum_correct += 1
-                    else:
-                        print('Incorrect \n')
-                    total_sports_score += 1
                 
                 count += 1
 
