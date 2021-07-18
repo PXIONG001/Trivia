@@ -34,17 +34,19 @@ def play_the_game(entryfile, exfile):
     
     # The Trivia Begins with a for loop
     for num in range(len(exfile)):
+
+        statement = True
         
         # Enter a file name that is within exfiles
-        while True:
+        while statement:
             #Asks the user to enter a trivia file to play
             file = input('Enter a trivia file to play: %s---> ' % (entry_file)).lower().strip()
 
-            if file not in exfile:
+            if file not in entry_file:
                 print('Invalid file name. Please choose one of the files listed to you to play!')
 
             else:
-                break  
+                statement = False
 
         #When entering a trivia file, the if statement, if true, removes the file in entry_file
         entry_file.remove(file) 
