@@ -13,7 +13,7 @@ from PIL import Image
 
 # play_the_game function plays the game
 def play_the_game(entryfile, exfile):
-    
+
     count = 0
     sum_correct = 0
     correct_sports_score = 0
@@ -97,14 +97,17 @@ def play_the_game(entryfile, exfile):
                     if aQuestion.lower().strip() == mAnswer[index].lower().strip():
                         print('correct \n')
 
-                        if file.lower().strip() == 'movie':
+                        if file.lower().strip() == 'movies':
                             correct_movies_score += 1
+                            total_movies_score += 1
 
                         elif file.lower().strip() == 'history':
                             correct_history_score += 1
+                            total_history_score += 1
                         
                         elif file.lower().strip() == 'sports':
                             correct_sports_score += 1
+                            total_sports_score += 1
 
                         sum_correct += 1
                     else:
