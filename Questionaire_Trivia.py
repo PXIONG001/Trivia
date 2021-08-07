@@ -43,7 +43,7 @@ def play_the_game(entryfile, exfile):
             else:
                 break  
 
-        #When entering a trivia file, the if statement, if true, removes the file in entry_file
+        # removes the file in entry_file
         entry_file.remove(file) 
         num_question = 0
         mQuestion = []
@@ -63,7 +63,8 @@ def play_the_game(entryfile, exfile):
             infile.close() 
             found = True
                 
-            #This causes the file to get created into a list which also creates a nested list as well.        
+            # This causes the file to get created into a list which also creates a nested list as well.  
+            # In this loop, the questions are seperated into the nested lists as well as the answers      
             for row in allRows:
                 if len(row.strip(' ,')) > 0:
                     line = row.split(',')
@@ -81,9 +82,8 @@ def play_the_game(entryfile, exfile):
                     questions.append(Q5)
                     secret_file.append(line[7])
             
-            ''' Let's remodify this for loop with the if statements. We can try to make it much more shorter. '''
-            
-            #In this loop, the file input is now sent to this loop where it analyzes the input and chooses the correct if statement to play
+            # In this loop, the file input is now sent to this loop where it analyzes the input and 
+            # chooses the correct if statement to play
             for index in range(len(mQuestion)):
                 num_question += 1
                 #This prints out the multpile choice answers
