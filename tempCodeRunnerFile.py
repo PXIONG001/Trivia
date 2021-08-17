@@ -1,15 +1,9 @@
 #Line 2-4 opens programs to play music, display images, and display a chart
+from os import name
 import matplotlib.pyplot as plt
 import pygame
 from PIL import Image
 
-
-'''
-    There will be at least 1 to 3 other functions. 
-    Be advised, there will be more to come with other 
-    features to come such as adding an account by adding
-    a login feature.
-'''
 
 # play_the_game function plays the game
 def play_the_game(entryfile, exfile):
@@ -110,6 +104,7 @@ def play_the_game(entryfile, exfile):
                             total_sports_score += 1
 
                         sum_correct += 1
+
                     else:
                         print('Incorrect \n')
 
@@ -173,7 +168,7 @@ def play_the_game(entryfile, exfile):
 
 
 
-#Line 191-193 and line 195-197 opens the csv file and creates it as a list
+# opens the csv file (exfiles) and puts it in a list
 infile = open('Exfiles.csv','r')
 exfile = infile.read().lower().strip().split('\n')
 infile.close()
@@ -182,12 +177,20 @@ infile = open('Exfiles.csv','r')
 entry_file = infile.read().lower().strip().split('\n')
 infile.close()
 
+# Note: This part will change where the user can sign
+#       into the game where they can see their score.
+#       Users will be allowed to play as guests, but
+#       will not show their score.
+
 # A loop where the player can choose to play or not.
 while True:
 
     do_you_want_to_play = input('Enter y or n to play the game: ')
 
     if do_you_want_to_play == 'y':
+
+
+
         play_the_game(entry_file, exfile)
         statement = False
 
