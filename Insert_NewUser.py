@@ -16,7 +16,7 @@ def insert_data(name, password):
         print(count, "Record inserted successfully into mobile table")
 
     except (Exception, psycopg2.Error) as error:
-        print("Failed to insert record into mobile table", error)
+        print("Failed to insert record into users table", error)
 
     finally:
         # closing database connection.

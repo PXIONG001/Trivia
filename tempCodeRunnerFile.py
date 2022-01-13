@@ -189,8 +189,6 @@ while True:
 
     if do_you_want_to_play == 'y':
 
-
-
         play_the_game(entry_file, exfile)
         statement = False
 
